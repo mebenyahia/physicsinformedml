@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Dataset</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="equation.html">Equation</a></li>
+    <li><a href="dataset.html">Dataset</a></li>
+    <li><a href="models.html">Models</a></li>
+    <li><a href="results.html">Results</a></li>
+    <li><a href="notebooks.html">Notebooks</a></li>
+  </ul>
+</nav>
+<main>
+  <h1>How We Build the Dataset</h1>
+  <p>To keep the experiment fully reproducible we generate synthetic data from the differential equation itself. We simulate the mass from 0 to 10 seconds and record 1,000 evenly spaced time points. These dense samples form our “ground truth” reference curve.</p>
+  <p>Real experiments are never perfect, so we also create noisy observations by adding gentle Gaussian noise with a standard deviation that is only 2% of the signal amplitude. This mimics sensors that are mostly accurate but still wobble a little.</p>
+  <p>During training we pretend that we only measured a small subset of time points (for example the first 40 points between 0 and 5 seconds). This tiny dataset is what we hand to the neural networks.</p>
+  <figure>
+    <img src="../figures/displacement.svg" alt="Displacement over time" width="600" />
+    <figcaption>Clean displacement curve generated from the physics model.</figcaption>
+  </figure>
+  <figure>
+    <img src="../figures/noisy_samples.svg" alt="Noisy samples" width="600" />
+    <figcaption>Noisy measurements showing how the signal could look in a lab.</figcaption>
+  </figure>
+  <p>See the first notebook (<em>Mass Spring Physics and Data</em>) for the full code that creates these curves step by step.</p>
+</main>
+<footer>
+  Synthetic data keeps the tutorial safe to run anywhere while still feeling realistic.
+</footer>
+</body>
+</html>

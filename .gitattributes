@@ -1,0 +1,7 @@
+# Ensure everything in the demo repo is treated as text-friendly content
+*.ipynb text
+*.svg text
+*.html text
+*.py text
+*.md text
+*.txt text
