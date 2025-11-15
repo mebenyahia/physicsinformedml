@@ -7,7 +7,7 @@ step.
 """
 
 from dataclasses import dataclass
-from typing import Callable, Iterable, List, Sequence
+from typing import Callable, Iterable, List, Optional, Sequence
 
 import torch
 from torch import nn
@@ -99,7 +99,7 @@ class ModelConfig:
     activation: str = "tanh"
 
 
-def build_baseline_model(config: ModelConfig | None = None) -> TimeMLP:
+def build_baseline_model(config: Optional[ModelConfig] = None) -> TimeMLP:
     """Create a neural network for the baseline experiment.
 
     The baseline network only sees noisy measurements and tries to fit them.  We
@@ -110,7 +110,7 @@ def build_baseline_model(config: ModelConfig | None = None) -> TimeMLP:
     return TimeMLP(hidden_layers=config.hidden_layers, activation=config.activation)
 
 
-def build_pinn_model(config: ModelConfig | None = None) -> TimeMLP:
+def build_pinn_model(config: Optional[ModelConfig] = None) -> TimeMLP:
     """Create a neural network to be trained as a Physics Informed Neural Network.
 
     The architecture matches :func:`build_baseline_model`, but the training loop
