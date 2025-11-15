@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='600' height='320' viewBox='0 0 600 320' role='img' aria-labelledby='title desc'>
+  <title id='title'>Noisy training samples</title>
+  <desc id='desc'>Dots show the limited noisy observations available for training the baseline neural network and PINN.</desc>
+  <rect x='0' y='0' width='600' height='320' fill='#ffffff' stroke='#cccccc' stroke-width='1'/>
+  <line x1='40' y1='280' x2='560' y2='280' stroke='#444' stroke-width='1'/>
+  <line x1='40' y1='40' x2='40' y2='280' stroke='#444' stroke-width='1'/>
+  <circle cx='40.00' cy='40.00' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='46.25' cy='41.57' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='53.01' cy='44.94' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='59.78' cy='53.71' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='66.55' cy='58.31' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='72.79' cy='68.46' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='79.56' cy='75.49' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='86.33' cy='86.15' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='93.09' cy='101.31' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='99.86' cy='113.62' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='106.11' cy='129.40' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='112.87' cy='142.53' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='119.64' cy='157.94' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='126.41' cy='171.82' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='133.17' cy='182.08' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='139.42' cy='200.36' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='146.19' cy='219.98' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='152.95' cy='229.98' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='159.72' cy='242.98' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='166.49' cy='249.26' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='172.73' cy='260.96' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='179.50' cy='268.19' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='186.27' cy='271.00' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='193.03' cy='275.60' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='199.80' cy='280.00' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='206.05' cy='278.97' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='212.81' cy='276.83' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='219.58' cy='273.02' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='226.35' cy='267.68' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='233.11' cy='260.53' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='239.36' cy='255.66' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='246.13' cy='249.33' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='252.89' cy='233.09' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='259.66' cy='223.56' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='266.43' cy='210.48' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='272.67' cy='201.29' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='279.44' cy='180.77' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='286.21' cy='169.11' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='292.97' cy='161.20' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <circle cx='299.74' cy='150.35' r='3' fill='#ff7f0e' opacity='0.85'/>
+  <text x='50' y='70' font-size='14' fill='#222'>Limited noisy samples used for training</text>
+</svg>

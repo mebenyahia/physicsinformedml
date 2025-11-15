@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='320' viewBox='0 0 400 320' role='img' aria-labelledby='title desc'>
+  <title id='title'>Test mean squared error comparison</title>
+  <desc id='desc'>Bars compare mean squared error for the baseline neural network and the physics informed neural network.</desc>
+  <rect x='0' y='0' width='400' height='320' fill='#ffffff' stroke='#cccccc' stroke-width='1'/>
+  <line x1='60' y1='280' x2='340' y2='280' stroke='#444' stroke-width='1'/>
+  <line x1='60' y1='40' x2='60' y2='280' stroke='#444' stroke-width='1'/>
+  <rect x='110' y='80.00' width='60' height='200.00' fill='#d62728'/>
+  <rect x='220' y='278.92' width='60' height='1.08' fill='#2ca02c'/>
+  <text x='140' y='300' font-size='14' text-anchor='middle' fill='#222'>Baseline</text>
+  <text x='250' y='300' font-size='14' text-anchor='middle' fill='#222'>PINN</text>
+  <text x='140' y='70.00' font-size='14' text-anchor='middle' fill='#222'>1.9062</text>
+  <text x='250' y='268.92' font-size='14' text-anchor='middle' fill='#222'>0.0103</text>
+</svg>

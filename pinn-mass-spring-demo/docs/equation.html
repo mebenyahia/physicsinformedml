@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Mass Spring Equation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="equation.html">Equation</a></li>
+    <li><a href="dataset.html">Dataset</a></li>
+    <li><a href="models.html">Models</a></li>
+    <li><a href="results.html">Results</a></li>
+    <li><a href="notebooks.html">Notebooks</a></li>
+  </ul>
+</nav>
+<main>
+  <h1>The Mass–Spring Equation</h1>
+  <p>The system we study is a small block attached to a spring. When you pull the block and let go, it oscillates back and forth around its rest position. The displacement of the block from the rest position is called <strong>x(t)</strong>, and it changes over time.</p>
+  <p>The motion is described by the differential equation:</p>
+  <pre>m * x''(t) + c * x'(t) + k * x(t) = 0</pre>
+  <ul>
+    <li><strong>m</strong> – the mass of the block. In our example we use m = 1.0 kilogram.</li>
+    <li><strong>k</strong> – the spring stiffness. Larger k means a stiffer spring. We use k = 1.0 newton per meter.</li>
+    <li><strong>c</strong> – the damping coefficient. This models friction or air resistance. We use c = 0.1, which leads to gently decaying oscillations.</li>
+    <li><strong>x'(t)</strong> – the velocity, meaning how fast the displacement is changing.</li>
+    <li><strong>x''(t)</strong> – the acceleration, the rate of change of the velocity.</li>
+  </ul>
+  <p>The spring force always pulls the mass back toward the rest position. If the mass is moving, damping slows it down, acting like a gentle brake. With no damping (c = 0) you would see perfect sine-like oscillations. With damping, the oscillations shrink over time as energy is lost.</p>
+  <p>You can picture the scene as:</p>
+  <pre>[wall]====spring====[mass]</pre>
+  <p>Pull the mass to the right, release it, and it will move left, overshoot a bit, and repeat. The equation above is the mathematical summary of that story.</p>
+</main>
+<footer>
+  Understanding the variables makes it easier to follow the neural network training later on.
+</footer>
+</body>
+</html>
