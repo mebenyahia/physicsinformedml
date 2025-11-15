@@ -1,256 +1,97 @@
 # Physics-Informed Machine Learning
 
-A comprehensive demonstration of Physics-Informed Neural Networks (PINNs) for solving partial differential equations.
+A collection of hands-on resources that show how Physics-Informed Neural Networks (PINNs) blend deep learning with governing equations. The repository now contains two complementary learning tracks:
+
+1. **Classic heat-equation PINN** – a compact PyTorch implementation that solves a 1D diffusion PDE with scripts and a notebook.
+2. **Beginner-focused mass–spring PINN demo** – a self-contained walkthrough (code, notebooks, figures, and GitHub Pages site) living in `pinn-mass-spring-demo/`.
+
+Both tracks emphasize readable code, extensive commentary, and reproducible experiments that run on a standard Python 3 environment.
 
 ## Overview
 
-This repository provides a complete implementation and tutorial on Physics-Informed Neural Networks (PINNs), showcasing how deep learning can be combined with physics to solve complex differential equations without traditional numerical methods.
+Physics-Informed Neural Networks (PINNs) are neural models that minimize measurement error *and* the residual of a known differential equation. Compared with purely data-driven approaches, PINNs:
 
-### What are Physics-Informed Neural Networks?
+- **Learn from sparse or noisy observations** by leveraging the physics as a regularizer.
+- **Solve forward and inverse problems** without meshing complex domains.
+- **Respect boundary/initial conditions** through explicit loss terms.
+- **Generalize better** because the hypothesis space is constrained by the governing law.
 
-Physics-Informed Neural Networks (PINNs) are a class of deep learning models that incorporate physical laws, expressed as partial differential equations (PDEs), directly into the neural network training process. Unlike conventional machine learning approaches that rely solely on data, PINNs leverage known physics to:
+This repository illustrates those ideas through two different problems described below.
 
-- **Learn from sparse and noisy data**
-- **Solve forward and inverse problems** in differential equations
-- **Provide mesh-free solutions** to complex PDEs
-- **Respect physical constraints** automatically
-- **Generalize better** with limited training data
+## Included demos
 
-## Features
+### 1. Heat-equation PINN (original tutorial)
+- Located in `src/pinn_heat_equation.py` with supporting material in `examples/` and `docs/`.
+- Solves the 1D heat equation
+  ```
+  ∂u/∂t = α * ∂²u/∂x²
+  ```
+  with Dirichlet boundary conditions `u(0, t)=u(1, t)=0` and initial condition `u(x, 0)=sin(πx)`.
+- Uses a fully connected network that takes `(x, t)` as input and outputs the temperature `u(x, t)`.
+- Training minimizes a composite loss: PDE residual + boundary loss + initial-condition loss.
+- Run it via:
+  ```bash
+  pip install -r requirements.txt
+  python src/pinn_heat_equation.py            # full training script
+  python examples/quick_demo.py               # lightweight illustration
+  jupyter notebook examples/pinn_demo.ipynb   # interactive exploration
+  ```
 
-✨ **Complete PINN Implementation**: Fully documented PyTorch implementation of PINNs for solving the 1D heat equation
+### 2. Mass–spring PINN demo (new beginner guide)
+- Lives entirely inside `pinn-mass-spring-demo/` so it can be copied or pushed as its own repo.
+- Focuses on the damped harmonic oscillator
+  ```
+  m * x''(t) + c * x'(t) + k * x(t) = 0
+  ```
+  with default parameters `m=1`, `k=1`, `c=0.1`.
+- Contents:
+  - `notebooks/01_mass_spring_physics_and_data.ipynb`: derives the physics, simulates clean/noisy data, and exports SVG figures.
+  - `notebooks/02_pure_nn_vs_pinn.ipynb`: trains a baseline MLP and a PINN, compares their predictions, and summarizes takeaways.
+  - `src/models.py`: reusable `TimeMLP` PyTorch module plus helper builders.
+  - `figures/`: lightweight SVG plots referenced in the docs.
+  - `docs/`: static GitHub Pages site with tabs for Home, Equation, Dataset, Models, Results, and Notebooks.
+- To try it locally:
+  ```bash
+  cd pinn-mass-spring-demo
+  python -m venv .venv && source .venv/bin/activate   # optional but recommended
+  pip install -r requirements.txt
+  jupyter notebook
+  ```
+  Then open the notebooks in numerical order. Enable GitHub Pages (source: `main`, folder: `/docs`) to publish the accompanying mini-site.
 
-📊 **Interactive Jupyter Notebook**: Step-by-step tutorial with visualizations and explanations
+## How PINNs work (high level)
 
-🎯 **Comprehensive Examples**: Multiple examples demonstrating different aspects of PINNs
+1. **Neural network architecture** – receives coordinates (time, or time+space) and outputs the field variable (displacement or temperature).
+2. **Automatic differentiation** – PyTorch autograd computes the derivatives needed by each PDE/ODE.
+3. **Loss composition** – combines data misfit terms with physics residuals and any boundary/initial-condition penalties.
+4. **Training loop** – Adam or LBFGS optimizers update the network using batches of collocation points and observed samples.
 
-📚 **Detailed Documentation**: In-depth explanations of theory, implementation, and usage
-
-🔬 **Visualization Tools**: Built-in plotting functions to visualize solutions and errors
-
-## Quick Start
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/mebenyahia/physicsinformedml.git
-cd physicsinformedml
-```
-
-2. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-### Running the Demo
-
-**Python Script:**
-```bash
-python src/pinn_heat_equation.py
-```
-
-**Quick Demo:**
-```bash
-python examples/quick_demo.py
-```
-
-**Jupyter Notebook:**
-```bash
-jupyter notebook examples/pinn_demo.ipynb
-```
-
-## The Problem: 1D Heat Equation
-
-The demo solves the 1D heat equation, which describes how heat diffuses through a material over time:
-
-```
-∂u/∂t = α * ∂²u/∂x²
-```
-
-Where:
-- `u(x, t)` is the temperature at position `x` and time `t`
-- `α` is the thermal diffusivity constant
-
-### Boundary Conditions
-- `u(0, t) = 0` (left boundary fixed at 0)
-- `u(1, t) = 0` (right boundary fixed at 0)
-
-### Initial Condition
-- `u(x, 0) = sin(πx)` (initial temperature distribution)
-
-### Exact Solution
-For validation, the exact solution is:
-```
-u(x, t) = sin(πx) * exp(-π²αt)
-```
-
-## How PINNs Work
-
-### 1. Neural Network Architecture
-
-The PINN takes spatial and temporal coordinates `(x, t)` as input and outputs the solution `u(x, t)`:
-
-```
-Input: (x, t) → Neural Network → Output: u(x, t)
-```
-
-### 2. Loss Function Components
-
-The PINN is trained to minimize a composite loss function:
-
-**L_total = L_PDE + L_BC + L_IC**
-
-Where:
-- **L_PDE**: PDE residual loss - ensures the solution satisfies the heat equation
-- **L_BC**: Boundary condition loss - ensures `u(0, t) = 0` and `u(1, t) = 0`
-- **L_IC**: Initial condition loss - ensures `u(x, 0) = sin(πx)`
-
-### 3. Automatic Differentiation
-
-PyTorch's autograd is used to compute the derivatives needed for the PDE:
-```python
-u_t = ∂u/∂t   # First derivative w.r.t. time
-u_x = ∂u/∂x   # First derivative w.r.t. space
-u_xx = ∂²u/∂x² # Second derivative w.r.t. space
-```
-
-### 4. Training Process
-
-1. Sample random collocation points in the domain
-2. Sample points on boundaries and initial condition
-3. Compute network predictions
-4. Calculate derivatives using autograd
-5. Compute loss function
-6. Update network weights using gradient descent
-
-## Repository Structure
+## Repository structure
 
 ```
 physicsinformedml/
+├── README.md                     # You are here
+├── requirements.txt              # Root dependency list (heat-equation demo)
+├── setup.py                      # Package metadata (targets Python 3.8+)
 ├── src/
-│   └── pinn_heat_equation.py    # Main PINN implementation
+│   └── pinn_heat_equation.py     # Heat-equation PINN implementation
 ├── examples/
-│   ├── quick_demo.py            # Quick demonstration script
-│   └── pinn_demo.ipynb          # Interactive Jupyter notebook
-├── docs/
-│   ├── theory.md                # Mathematical theory
-│   ├── implementation.md        # Implementation details
-│   └── usage.md                 # Usage guide
-├── outputs/                     # Generated plots and results
-├── requirements.txt             # Python dependencies
-├── .gitignore                   # Git ignore file
-└── README.md                    # This file
+│   ├── quick_demo.py             # Minimal script
+│   └── pinn_demo.ipynb           # Companion notebook
+├── docs/                         # Theory/usage notes for the heat-equation tutorial
+├── pinn-mass-spring-demo/        # Standalone mass–spring PINN walkthrough (code + docs)
+│   ├── README.md                 # Beginner instructions specific to the demo
+│   ├── requirements.txt          # Lightweight dependency list (PyTorch, SciPy, etc.)
+│   ├── notebooks/                # Two guided Jupyter notebooks
+│   ├── src/models.py             # Shared TimeMLP definition
+│   └── docs/                     # GitHub Pages-ready HTML + CSS + SVG figures
+└── ...                           # License, contributing guide, additional resources
 ```
-
-## Code Example
-
-```python
-from src.pinn_heat_equation import HeatEquationPINN, plot_solution
-import torch
-
-# Initialize PINN
-solver = HeatEquationPINN(alpha=0.1, layers=[2, 50, 50, 50, 1])
-
-# Train the network
-solver.train(n_epochs=5000, n_pde=10000, verbose=True)
-
-# Visualize results
-plot_solution(solver, save_path='outputs/solution.png')
-
-# Make predictions
-import numpy as np
-x = np.array([[0.5]])  # x = 0.5
-t = np.array([[0.5]])  # t = 0.5
-u = solver.predict(x, t)
-print(f"u(0.5, 0.5) = {u[0, 0]:.6f}")
-```
-
-## Results
-
-The PINN achieves excellent accuracy in solving the heat equation:
-- **Relative L2 Error**: < 0.001
-- **Maximum Absolute Error**: < 0.01
-- **Training Time**: ~2-5 minutes on CPU
-
-Example output showing the PINN solution, exact solution, error, and training history:
-
-![Solution Visualization](outputs/heat_equation_solution.png)
-
-## Key Advantages of PINNs
-
-1. **No Mesh Required**: Unlike finite difference or finite element methods, PINNs don't require discretization of the domain
-
-2. **Handles Complex Geometries**: Can solve PDEs in irregular domains without complex meshing
-
-3. **Data-Driven Physics**: Can incorporate both data and physical laws, useful when physics is partially known
-
-4. **Inverse Problems**: Can solve inverse problems (finding unknown parameters) naturally
-
-5. **Continuous Solution**: Provides a continuous function that can be evaluated anywhere in the domain
-
-6. **Automatic Differentiation**: Leverages modern deep learning frameworks for efficient derivative computation
-
-## Limitations and Considerations
-
-- **Computational Cost**: Training can be expensive for complex problems
-- **Hyperparameter Sensitivity**: Performance depends on network architecture and training parameters
-- **Convergence**: May require careful initialization and tuning
-- **High-Dimensional Problems**: Can struggle with very high-dimensional PDEs
-
-## Extensions and Advanced Topics
-
-### Other PDEs to Try
-- **Wave Equation**: Oscillatory phenomena
-- **Burgers' Equation**: Fluid dynamics with nonlinearity
-- **Navier-Stokes**: Fluid flow (more complex)
-- **Schrödinger Equation**: Quantum mechanics
-
-### Advanced Techniques
-- **Transfer Learning**: Pre-train on similar problems
-- **Multi-fidelity**: Combine low and high-fidelity data
-- **Adaptive Sampling**: Focus collocation points where error is high
-- **Ensemble Methods**: Multiple PINNs for uncertainty quantification
 
 ## Contributing
 
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Add new PDE examples
-- Improve documentation
-
-## References
-
-### Foundational Papers
-
-1. **Raissi, M., Perdikaris, P., & Karniadakis, G. E.** (2019). *Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations*. Journal of Computational Physics, 378, 686-707.
-   - Original PINN paper introducing the methodology
-
-2. **Karniadakis, G. E., et al.** (2021). *Physics-informed machine learning*. Nature Reviews Physics, 3(6), 422-440.
-   - Comprehensive review of physics-informed ML
-
-3. **Cuomo, S., et al.** (2022). *Scientific machine learning through physics–informed neural networks: Where we are and what's next*. Journal of Scientific Computing, 92(3), 88.
-   - Recent survey of PINN applications and future directions
-
-### Additional Resources
-
-- [PINN Papers on GitHub](https://github.com/maziarraissi/PINNs)
-- [DeepXDE Library](https://deepxde.readthedocs.io/)
-- [SciML Ecosystem](https://sciml.ai/)
+We welcome issues and pull requests that improve clarity, fix bugs, or expand the set of demonstrators—just ensure new additions remain beginner friendly and stick to Python 3.8+ compatible syntax. See `CONTRIBUTING.md` for workflow details.
 
 ## License
 
-This project is provided for educational purposes. Feel free to use and modify the code for learning and research.
-
-## Acknowledgments
-
-This implementation is inspired by the pioneering work of Maziar Raissi, Paris Perdikaris, and George Em Karniadakis on Physics-Informed Neural Networks.
-
-## Contact
-
-For questions or feedback, please open an issue on GitHub.
-
----
-
-**Happy Learning! 🚀🔬**
+This project is distributed under the terms of the MIT License (see `LICENSE`).
