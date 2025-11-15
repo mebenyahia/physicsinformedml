@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Results</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="equation.html">Equation</a></li>
+    <li><a href="dataset.html">Dataset</a></li>
+    <li><a href="models.html">Models</a></li>
+    <li><a href="results.html">Results</a></li>
+    <li><a href="notebooks.html">Notebooks</a></li>
+  </ul>
+</nav>
+<main>
+  <h1>Comparing the Predictions</h1>
+  <p>After training, we compare the baseline neural network and the PINN on a dense test set that covers the full 0 to 10 second window. The first figure highlights where training data were available. The second figure overlays the true motion with both model predictions across the entire time range.</p>
+  <figure>
+    <img src="../figures/training_window.svg" alt="Training window" width="650" />
+    <figcaption>The shaded band marks the limited time interval with noisy observations.</figcaption>
+  </figure>
+  <figure>
+    <img src="../figures/model_comparison.svg" alt="Model comparison" width="650" />
+    <figcaption>True solution (blue), baseline NN (orange), and PINN (green) plotted across the full time window.</figcaption>
+  </figure>
+  <p>The baseline network fits the noisy training points but starts to drift once it moves beyond the observed window. In contrast, the PINN remains close to the physical trajectory, thanks to the guidance from the differential equation.</p>
+  <figure>
+    <img src="../figures/error_comparison.svg" alt="Prediction errors" width="650" />
+    <figcaption>Prediction errors highlight how the PINN stays near zero while the baseline drifts.</figcaption>
+  </figure>
+  <h2>Numbers at a Glance</h2>
+  <ul>
+    <li>Baseline NN test mean squared error (0–10 s): <strong>1.906</strong></li>
+    <li>PINN test mean squared error (0–10 s): <strong>0.010</strong></li>
+  </ul>
+  <p>Even with only a handful of data points, the PINN produces a smoother curve and a lower error. The takeaway is that encoding physics in the loss function can dramatically improve generalization.</p>
+</main>
+<footer>
+  Dive into the second notebook for training logs and more diagnostic plots.
+</footer>
+</body>
+</html>
